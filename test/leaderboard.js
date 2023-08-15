@@ -68,7 +68,14 @@ const shareData = {
 
 async function test() {
 
-    // green=potential, blue=new, purple=hot, diy=<diy>
+    /*
+    * option:{
+    *   styleType: 'green',  // green=potential, blue=new, purple=hot, diy=<diy>
+    *   diyText: 'DIY DEMO' // max length 8
+    * }
+    * logoPath "/data/gdogstatic/logo/"
+    * QRUrl "https://t.g.dog/tgapp/?tokendetail="
+    * */
     console.time('test_');
     let diy = new Leaderboard({
         styleType: 'diy',

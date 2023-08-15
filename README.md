@@ -71,12 +71,20 @@ const shareData = {
 
 async function test() {
 
-    // green=potential, blue=new, purple=hot, diy=<diy>
+    
+    /*
+    * option:{
+    *   styleType: 'green',  // green=potential, blue=new, purple=hot, diy=<diy>
+    *   diyText: 'DIY DEMO' // max length 8
+    * }
+    * logoPath="/data/gdogstatic/logo/"
+    * QRUrl="https://t.g.dog/tgapp/?tokendetail="
+    * */
     
     let diy = new Leaderboard({
         styleType: 'diy',
         diyText: 'Diy Demo' // max length 8
-    });
+    }, "/data/gdogstatic/logo/", "https://t.g.dog/tgapp/?tokendetail=");
     await diy.initBg();
     await diy.setData(shareData);
     diy.getPNG();

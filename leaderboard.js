@@ -31,7 +31,8 @@ class Leaderboard {
     *   styleType: 'green',  // green=potential, blue=new, purple=hot, diy=<diy>
     *   diyText: 'DIY DEMO' // max length 8
     * }
-    *
+    * logoPath "/data/gdogstatic/logo/"
+    * QRUrl "https://t.g.dog/tgapp/?tokendetail="
     * */
     constructor(option, logoPath = "/data/gdogstatic/logo/", QRUrl = "https://t.g.dog/tgapp/?tokendetail=") {
         if(typeof option == 'string') option = {styleType: option};
