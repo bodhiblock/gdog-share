@@ -53,9 +53,9 @@ function getAgoTime(timestamp) {
     const minutes = Math.floor(remainingMillisecondsAfterHours / millisecondsPerMinute);
 
     if(days < 0){
-        return minutes + 'M ' + hours + 'H'
+        return minutes + 'm' + hours + 'h'
     }else{
-        return hours + 'H ' + days + 'D'
+        return hours + 'h' + days + 'd'
     }
 
 }
