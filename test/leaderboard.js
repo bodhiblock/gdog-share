@@ -69,15 +69,17 @@ const shareData = {
 async function test() {
 
     // green=potential, blue=new, purple=hot, diy=<diy>
-
+    console.time('test_');
     let diy = new Leaderboard({
         styleType: 'diy',
         diyText: 'Diy Demo'
     });
     await diy.initBg();
+    console.time('getBuffer');
     await diy.setData(shareData);
-    diy.getPNG();
     console.log(diy.getBuffer());
+    console.timeEnd('getBuffer');
+    diy.getPNG();
 
     let green = new Leaderboard('green');
     await green.initBg();
@@ -96,6 +98,7 @@ async function test() {
     await purple.setData(shareData);
     purple.getPNG();
     console.log(purple.getBuffer());
+
 }
 
 test();
