@@ -150,7 +150,7 @@ class Leaderboard {
     async setQRCode(text) {
         let that = this;
         return new Promise((resolve, reject) => {
-            QRCode.toDataURL(text, {width: 160, margin: 0, color: {dark: '#ffffff00', light: "#000000ff"}}, (err, url) => {
+            QRCode.toDataURL(this.QRUrl + text, {width: 160, margin: 0, color: {dark: '#ffffff00', light: "#000000ff"}}, (err, url) => {
                 if (err) {
                     reject(err)
                 } else {
