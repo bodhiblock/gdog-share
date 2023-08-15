@@ -256,7 +256,7 @@ class Leaderboard {
                 bottom: zoomIndex == index ? 6 : 0,
             });
         });
-        bondText(this.ctx, x, y, bondTextStyle, 120, true);
+        bondText(this.ctx, x, y, bondTextStyle, 15, );
     }
 
     async setSafety(opensource, owner, honeypot) {
@@ -326,11 +326,11 @@ class Leaderboard {
 
     setDataText(x, y, strAry) {
         let bondTextStyle = [];
-        let fontData = "56px '腾讯字体'";
+        let fontData = "bold 56px 'Microsoft YaHei UI'";
         strAry.forEach((item, index) => {
             bondTextStyle.push({
                 text: item,
-                font: index == 1 ? "33px '腾讯字体'" : fontData,
+                font: index == 1 ? "bold 33px 'Microsoft YaHei UI'" : fontData,
                 fillStyle: "#ffffff",
                 bottom: index == 1 && strAry.length >= 3 ? 30 : index == 1 ? 22 : 0,
             });
