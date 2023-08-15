@@ -71,16 +71,19 @@ async function test() {
     await green.initBg();
     await green.setData(shareData);
     green.getPNG();
+    console.log(green.getBuffer());
 
     let blue = new Leaderboard('blue');
     await blue.initBg();
     await blue.setData(shareData);
     blue.getPNG();
+    console.log(blue.getBuffer());
 
     let purple = new Leaderboard('purple');
     await purple.initBg();
     await purple.setData(shareData);
     purple.getPNG();
+    console.log(purple.getBuffer());
 }
 
 test();
