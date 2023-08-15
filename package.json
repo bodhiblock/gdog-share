@@ -7,11 +7,14 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/leaderboard.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "canvas": "^2.11.2"
+    "canvas": "^2.11.2",
+    "decimal.js": "^10.4.3",
+    "path2d-polyfill": "^2.0.1",
+    "qrcode": "^1.5.3"
   }
 }
