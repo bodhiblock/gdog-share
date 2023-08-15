@@ -76,22 +76,25 @@ async function test() {
     * logoPath "/data/gdogstatic/logo/"
     * QRUrl "https://t.g.dog/tgapp/?tokendetail="
     * */
-    console.time('test_');
+    console.time('diy');
     let diy = new Leaderboard({
         styleType: 'diy',
         diyText: 'Diy Demo'
     });
     await diy.initBg();
-    console.time('getBuffer');
+    console.time('diy setData');
     await diy.setData(shareData);
-    console.log(diy.getBuffer());
-    console.timeEnd('getBuffer');
-    shareData.symbol = 'DEMO';
-    console.time('getBuffer');
-    await diy.setData(shareData);
-    console.log(diy.getBuffer());
-    console.timeEnd('getBuffer');
+    console.timeEnd('diy setData');
+    diy.getBuffer()
+    // console.log(diy.getBuffer());
 
+    shareData.symbol = 'DEMO';
+    console.time('diy setData update');
+    await diy.setData(shareData);
+    diy.getBuffer()
+    console.timeEnd('diy setData update');
+
+    console.timeEnd('diy');
     diy.getPNG();
 
     let green = new Leaderboard('green');

@@ -41,6 +41,7 @@ class Leaderboard {
         this.logoPath = logoPath;
         this.QRUrl = QRUrl;
         this.canvas = createCanvas(1140, 1080);
+        // this.canvas = createCanvas(570, 540);
         this.ctx = this.canvas.getContext('2d');
         this.styleColor = styleColor[option.styleType];
     }
@@ -329,11 +330,13 @@ class Leaderboard {
         bondText(this.ctx, x, y, bondTextStyle, 5);
     }
 
-    getBuffer(compressionLevel = 8){
-        return this.canvas.toBuffer('image/png', {compressionLevel: compressionLevel})
+    getBuffer(compressionLevel = 9){
+        // this.canvas.height = 540;
+        // this.canvas.width = 570;
+        return this.canvas.toBuffer('image/png', {compressionLevel: compressionLevel, filters: this.canvas.PNG_FILTER_NONE})
     }
 
-    getPNG(compressionLevel = 8) {
+    getPNG(compressionLevel = 9) {
         let imgUrl = __dirname + `/test/${this.styleType}.png`;
         fs.writeFileSync(imgUrl, this.canvas.toBuffer('image/png', {compressionLevel: compressionLevel}));
     }
