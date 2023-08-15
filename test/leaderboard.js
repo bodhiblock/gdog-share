@@ -75,6 +75,7 @@ async function test() {
     * }
     * logoPath "/data/gdogstatic/logo/"
     * QRUrl "https://t.g.dog/tgapp/?tokendetail="
+    * scale 0.8
     * */
     console.time('diy');
     let diy = new Leaderboard({

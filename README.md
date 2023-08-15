@@ -79,16 +79,29 @@ async function test() {
     * }
     * logoPath="/data/gdogstatic/logo/"
     * QRUrl="https://t.g.dog/tgapp/?tokendetail="
+    * scale 0.8
     * */
     
+    console.time('diy');
     let diy = new Leaderboard({
         styleType: 'diy',
-        diyText: 'Diy Demo' // max length 8
-    }, "/data/gdogstatic/logo/", "https://t.g.dog/tgapp/?tokendetail=");
+        diyText: 'Diy Demo'
+    });
     await diy.initBg();
+    console.time('diy setData');
     await diy.setData(shareData);
+    console.timeEnd('diy setData');
+    diy.getBuffer()
+    // console.log(diy.getBuffer());
+
+    shareData.symbol = 'DEMO';
+    console.time('diy setData update');
+    await diy.setData(shareData);
+    diy.getBuffer()
+    console.timeEnd('diy setData update');
+
+    console.timeEnd('diy');
     diy.getPNG();
-    console.log(diy.getBuffer());
 
     let green = new Leaderboard('green');
     await green.initBg();

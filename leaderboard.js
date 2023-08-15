@@ -37,7 +37,7 @@ class Leaderboard {
     * }
     * logoPath "/data/gdogstatic/logo/"
     * QRUrl "https://t.g.dog/tgapp/?tokendetail="
-    * scale 0.5
+    * scale 0.8
     * */
     constructor(option, logoPath = "/data/gdogstatic/logo/", QRUrl = "https://t.g.dog/tgapp/?tokendetail=") {
         if(typeof option == 'string') option = {styleType: option};
