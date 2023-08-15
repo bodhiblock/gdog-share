@@ -251,9 +251,9 @@ class Leaderboard {
         strAry.forEach((item, index) => {
             bondTextStyle.push({
                 text: item,
-                font: zoomIndex == index ? "24px '腾讯字体'" : fontData,
+                font: zoomIndex == index ? "24px 'Microsoft YaHei UI Light'" : fontData,
                 fillStyle: zoomIndex == index ? '#9a9f99' : "#ffffff",
-                bottom: zoomIndex == index ? 4 : 0,
+                bottom: zoomIndex == index ? 6 : 0,
             });
         });
         bondText(this.ctx, x, y, bondTextStyle, 120, true);

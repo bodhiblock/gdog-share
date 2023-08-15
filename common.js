@@ -204,9 +204,9 @@ async function canvasBg (ctx, styleType){
 
 function zoomNumber(num, unit, zoom){
     if(Number(num) >= 100 && zoom){
-        return [num.slice(0, 1) , num.slice(1, num.length) + unit];
+        return [num.slice(0, 1) + num.slice(1, num.length) + unit];
     }else{
-        return [num , unit];
+        return [num + unit];
     }
 }
 function toNumberFormat(num, zoom){
@@ -216,13 +216,13 @@ function toNumberFormat(num, zoom){
     num = Number(num);
     if(!!!num) return ['0'];
     if(num >= 1000000000){
-        return zoomNumber(new Decimal(num).div(1000000000).toDP(1).toString(), 'B', zoom);
+        return zoomNumber(new Decimal(num).div(1000000000).toDP(0).toString(), 'B', zoom);
     }
     if(num >= 1000000){
-        return zoomNumber(new Decimal(num).div(1000000).toDP(1).toString(), 'M', zoom);
+        return zoomNumber(new Decimal(num).div(1000000).toDP(0).toString(), 'M', zoom);
     }
     if(num >= 1000){
-        return zoomNumber(new Decimal(num).div(1000).toDP(1).toString(), 'K', zoom);
+        return zoomNumber(new Decimal(num).div(1000).toDP(0).toString(), 'K', zoom);
     }
     if(num < 1){
         let str = new Decimal(num).toFixed(18).toString();
@@ -235,7 +235,7 @@ function toNumberFormat(num, zoom){
             return ['0.0' ,  sub.toString(), str.slice(len, len + 2)]
         }
     }
-    return zoomNumber(new Decimal(num).toDP(1, Decimal.ROUND_DOWN).toString(), '', zoom);
+    return zoomNumber(new Decimal(num).toDP(0, Decimal.ROUND_DOWN).toString(), '', zoom);
     // return [new Decimal(num).toDP(2, Decimal.ROUND_DOWN).toString()];
 }
 
