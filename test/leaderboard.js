@@ -79,6 +79,12 @@ async function test() {
     await diy.setData(shareData);
     console.log(diy.getBuffer());
     console.timeEnd('getBuffer');
+    shareData.symbol = 'DEMO';
+    console.time('getBuffer');
+    await diy.setData(shareData);
+    console.log(diy.getBuffer());
+    console.timeEnd('getBuffer');
+
     diy.getPNG();
 
     let green = new Leaderboard('green');

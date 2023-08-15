@@ -106,14 +106,12 @@ async function canvasBg (ctx, styleType){
     ctx.lineWidth = 2;
     ctx.arc(100, 100, 64, 0, 2 * Math.PI);
     ctx.stroke();
-    if(styleType != 'green' && styleType != 'diy'){
+    if(styleType == 'blue'){
         await drawImage(ctx, styleUrl('label.png'), [870, 90]);
-    }else{
-        if(styleType == 'diy'){
-            // await drawImage(ctx, styleUrl('label.png'), [740, 90]);
-        }else{
-            await drawImage(ctx, styleUrl('label.png'), [740, 90]);
-        }
+    }else if(styleType == 'purple'){
+        await drawImage(ctx, styleUrl('label.png'), [850, 90]);
+    }else if(styleType == 'green'){
+        await drawImage(ctx, styleUrl('label.png'), [740, 90]);
     }
 
 
