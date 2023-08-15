@@ -175,8 +175,9 @@ class Leaderboard {
         let timeLocal = t.toLocaleTimeString('en-US');
 
         const gradient = this.ctx.createLinearGradient(740, 40, 900, 50);
-        gradient.addColorStop(0, "rgb(40,242,156)");
-        gradient.addColorStop(1, "rgb(2,192,240)");
+        this.styleColor.time.forEach((item, index) => {
+            gradient.addColorStop(index, item);
+        });
         bondText(this.ctx, 740, 40, [
             {
                 text: timeLocal,
@@ -241,7 +242,7 @@ class Leaderboard {
             {
                 text: 'ago',
                 font: "400 26px 'Microsoft YaHei UI'",
-                fillStyle: "#6ebba5",
+                fillStyle: this.styleColor.ago,
             }
         ]);
     }
@@ -290,9 +291,13 @@ class Leaderboard {
         bondText(this.ctx, x, y, bondTextStyle, 5);
     }
 
-    getPNG() {
+    getBuffer(compressionLevel = 8){
+        return this.canvas.toBuffer('image/png', {compressionLevel: compressionLevel})
+    }
+
+    getPNG(compressionLevel = 8) {
         let imgUrl = __dirname + '/test.png';
-        fs.writeFileSync(imgUrl, this.canvas.toBuffer('image/png', {compressionLevel: 8}));
+        fs.writeFileSync(imgUrl, this.canvas.toBuffer('image/png', {compressionLevel: compressionLevel}));
     }
 }
 

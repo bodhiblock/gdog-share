@@ -12,7 +12,27 @@ const styleColor = {
         symbol: '#326f60',
         address: '#6ebba5',
         ago: '#6ebba5',
-    }
+        time: ['rgb(40,242,156)', 'rgb(2,192,240)'],
+    },
+
+    blue : {
+        symbol: '#10788e',
+        address: '#ffffff',
+        ago: '#175e74',
+        time: ['#5450ff', '#55e1ea'],
+    },
+    purple : {
+        symbol: '#7e3b9f',
+        address: '#ffffff',
+        ago: '#7e3b9f',
+        time: ['#c231ff', '#45c9f9'],
+    },
+    diy : {
+        symbol: '#326f60',
+        address: '#6ebba5',
+        ago: '#6ebba5',
+        time: ['rgb(40,242,156)', 'rgb(2,192,240)'],
+    },
 }
 
 function getAgoTime(timestamp) {
