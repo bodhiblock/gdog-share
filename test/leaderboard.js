@@ -67,6 +67,18 @@ const shareData = {
 
 
 async function test() {
+
+    // green=potential, blue=new, purple=hot, diy=<diy>
+
+    let diy = new Leaderboard({
+        styleType: 'diy',
+        diyText: 'Diy Demo'
+    });
+    await diy.initBg();
+    await diy.setData(shareData);
+    diy.getPNG();
+    console.log(diy.getBuffer());
+
     let green = new Leaderboard('green');
     await green.initBg();
     await green.setData(shareData);

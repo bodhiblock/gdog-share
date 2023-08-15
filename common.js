@@ -65,6 +65,7 @@ function getAgoTime(timestamp) {
 registerFont(path.resolve('./font/msyh.ttc'), { family: 'Microsoft YaHei UI' });
 registerFont(path.resolve('./font/msyhl.ttc'), { family: 'Microsoft YaHei UI Light' });
 registerFont(path.resolve('./font/msyhbd.ttc'), { family: 'Microsoft YaHei UI Bold' });
+registerFont(path.resolve('./font/Speedtest-2.ttf'), { family: 'speedtest' });
 
 function drawImage(ctx, url, arr){
     return new Promise((resolve, reject) => {
@@ -90,7 +91,7 @@ function bondText(ctx, x, y, styleText, gap){
 }
 
 function styleUrlPath (name, styleType){
-    return `./images/${styleType}/${name}`;
+    return `./images/${styleType == 'diy' ? 'green': styleType}/${name}`;
 }
 
 async function canvasBg (ctx, styleType){
@@ -105,10 +106,14 @@ async function canvasBg (ctx, styleType){
     ctx.lineWidth = 2;
     ctx.arc(100, 100, 64, 0, 2 * Math.PI);
     ctx.stroke();
-    if(styleType != 'green'){
+    if(styleType != 'green' && styleType != 'diy'){
         await drawImage(ctx, styleUrl('label.png'), [870, 90]);
     }else{
-        await drawImage(ctx, styleUrl('label.png'), [740, 90]);
+        if(styleType == 'diy'){
+            // await drawImage(ctx, styleUrl('label.png'), [740, 90]);
+        }else{
+            await drawImage(ctx, styleUrl('label.png'), [740, 90]);
+        }
     }
 
 

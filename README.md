@@ -1,7 +1,7 @@
 # gdog-share
 
 
-### Leaderboard Demo
+### Leaderboard Demo ./test/leaderboard.js
 ```
 const shareData = {
     bot_id: 0,
@@ -70,6 +70,18 @@ const shareData = {
 
 
 async function test() {
+
+    // green=potential, blue=new, purple=hot, diy=<diy>
+    
+    let diy = new Leaderboard({
+        styleType: 'diy',
+        diyText: 'Diy Demo' // max length 8
+    });
+    await diy.initBg();
+    await diy.setData(shareData);
+    diy.getPNG();
+    console.log(diy.getBuffer());
+
     let green = new Leaderboard('green');
     await green.initBg();
     await green.setData(shareData);

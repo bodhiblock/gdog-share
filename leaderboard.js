@@ -15,6 +15,7 @@ class Leaderboard {
     tmp;
     // green=potential, blue=new, purple=hot, diy=<diy>
     styleColor;
+    diyText;
     // logo path
     logoPath = "/data/gdogstatic/logo/";
     // QRCode url
@@ -25,16 +26,31 @@ class Leaderboard {
         this.tmp = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    constructor(styleType, logoPath = "/data/gdogstatic/logo/", QRUrl = "https://t.g.dog/tgapp/?tokendetail=") {
-        this.styleType = styleType;
+    /*
+    * option:{
+    *   styleType: 'green',  // green=potential, blue=new, purple=hot, diy=<diy>
+    *   diyText: 'DIY DEMO' // max length 8
+    * }
+    *
+    * */
+    constructor(option, logoPath = "/data/gdogstatic/logo/", QRUrl = "https://t.g.dog/tgapp/?tokendetail=") {
+        if(typeof option == 'string') option = {styleType: option};
+        this.styleType = option.styleType;
+        this.diyText = option.diyText || '';
         this.logoPath = logoPath;
         this.QRUrl = QRUrl;
         this.canvas = createCanvas(1140, 1080);
         this.ctx = this.canvas.getContext('2d');
-        this.styleColor = styleColor[styleType];
+        this.styleColor = styleColor[option.styleType];
     }
 
+    data;
     async setData(data) {
+        if(this.data){
+            this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
+            this.ctx.putImageData(this.tmp, 0, 0);
+        }
+        this.data =data;
         this.ctx.save();
         this.setName(data.name, data.symbol);
         this.setAddress(data.token_contract);
@@ -112,9 +128,30 @@ class Leaderboard {
         } catch (e) {
             this.avatarError(data.symbol)
         }
-
-
+        this.setDiyText();
         this.ctx.restore();
+
+    }
+
+    setDiyText(){
+        if(this.styleType == 'diy' && this.diyText){
+            this.ctx.save();
+            this.ctx.font = "bold 80px 'speedtest'";
+            this.ctx.textBaseline = "top";
+            this.ctx.fillStyle = "#000000";
+            this.ctx.rotate((Math.PI / 180) * -2);
+            const gradient = this.ctx.createLinearGradient(740, 40, 900, 50);
+            let diyText = this.diyText.length > 8 ? this.diyText.slice(0, 8) + '...' : this.diyText;
+            let diyStyleColor = JSON.parse(JSON.stringify(this.styleColor.time)).reverse();
+            diyStyleColor.forEach((item, index) => {
+                gradient.addColorStop(index, item);
+            });
+            let measure = this.ctx.measureText(diyText);
+
+            this.ctx.fillStyle = gradient;
+            this.ctx.fillText(diyText, this.canvas.width - measure.width - 40, 115);
+            this.ctx.restore();
+        }
     }
 
     avatarError(symbol) {
