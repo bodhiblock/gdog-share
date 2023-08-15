@@ -10,7 +10,7 @@ polyfillPath2D(global);
 const styleColor = {
     green : {
         symbol: '#326f60',
-        address: '#6ebba5',
+        address: '#ffffff',
         ago: '#6ebba5',
         time: ['rgb(40,242,156)', 'rgb(2,192,240)'],
     },
