@@ -1,4 +1,4 @@
-const {createCanvas, loadImage, Image, registerFont} = require('canvas')
+const {createCanvas, loadImage, Image, registerFont, PngConfig} = require('canvas')
 
 const fs = require('fs');
 const {drawImage, bondText, canvasBg, styleColor, getAgoTime, styleUrlPath, toNumberFormat} = require('./common');
@@ -16,14 +16,18 @@ class Leaderboard {
     // green=potential, blue=new, purple=hot, diy=<diy>
     styleColor;
     diyText;
+    scale;
     // logo path
     logoPath = "/data/gdogstatic/logo/";
     // QRCode url
     QRUrl = "https://t.g.dog/tgapp/?tokendetail=";
 
     async initBg() {
+        this.ctx.save()
+        this.ctx.scale(this.scale, this.scale)
         await canvasBg(this.ctx, this.styleType);
-        this.tmp = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        this.tmp = this.ctx.getImageData(0, 0, this.canvas.width * this.scale , this.canvas.height / this.scale);
+        this.ctx.restore();
     }
 
     /*
@@ -33,11 +37,13 @@ class Leaderboard {
     * }
     * logoPath "/data/gdogstatic/logo/"
     * QRUrl "https://t.g.dog/tgapp/?tokendetail="
+    * scale 0.5
     * */
     constructor(option, logoPath = "/data/gdogstatic/logo/", QRUrl = "https://t.g.dog/tgapp/?tokendetail=") {
         if(typeof option == 'string') option = {styleType: option};
         this.styleType = option.styleType;
         this.diyText = option.diyText || '';
+        this.scale = option.scale || 0.8;
         this.logoPath = logoPath;
         this.QRUrl = QRUrl;
         this.canvas = createCanvas(1140, 1080);
@@ -48,12 +54,13 @@ class Leaderboard {
 
     data;
     async setData(data) {
-        if(this.data){
+        // if(this.data){
             this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
             this.ctx.putImageData(this.tmp, 0, 0);
-        }
+        // }
         this.data =data;
         this.ctx.save();
+        this.ctx.scale(this.scale, this.scale);
         this.setName(data.name, data.symbol);
         this.setAddress(data.token_contract);
         let ago = getAgoTime(data.create_time);
@@ -123,6 +130,7 @@ class Leaderboard {
         this.setTwitter(440, 910, [toNumberFormat(twitter_related.related_count).join(''), 'Mentioned']);
         this.setTwitter(440, 960, [toNumberFormat(twitter_related.related_count).join(''), 'Reposts']);
         this.setTwitter(440, 1010, [toNumberFormat(twitter_related.favourites_count).join(''), 'Likes']);
+
         this.setTime(data.create_time);
         await this.setQRCode(data.token_contract);
         try {
@@ -243,12 +251,12 @@ class Leaderboard {
         strAry.forEach((item, index) => {
             bondTextStyle.push({
                 text: item,
-                font: zoomIndex == index ? "24px 'Microsoft YaHei UI Light'" : fontData,
+                font: zoomIndex == index ? "24px '腾讯字体'" : fontData,
                 fillStyle: zoomIndex == index ? '#9a9f99' : "#ffffff",
                 bottom: zoomIndex == index ? 4 : 0,
             });
         });
-        bondText(this.ctx, x, y, bondTextStyle, 15);
+        bondText(this.ctx, x, y, bondTextStyle, 120, true);
     }
 
     async setSafety(opensource, owner, honeypot) {
@@ -293,12 +301,12 @@ class Leaderboard {
         bondText(this.ctx, 180, 45, [
             {
                 text: name,
-                font: "400 48px 'Microsoft YaHei UI'",
+                font: "bold 48px '腾讯字体'",
                 fillStyle: "#ffffff",
             },
             {
                 text: '$' + symbol,
-                font: "400 48px 'Microsoft YaHei UI'",
+                font: "bold 48px '腾讯字体'",
                 fillStyle: this.styleColor.symbol,
             }
         ]);
@@ -318,11 +326,11 @@ class Leaderboard {
 
     setDataText(x, y, strAry) {
         let bondTextStyle = [];
-        let fontData = "56px 'Microsoft YaHei UI'";
+        let fontData = "56px '腾讯字体'";
         strAry.forEach((item, index) => {
             bondTextStyle.push({
                 text: item,
-                font: index == 1 ? "33px 'Microsoft YaHei UI'" : fontData,
+                font: index == 1 ? "33px '腾讯字体'" : fontData,
                 fillStyle: "#ffffff",
                 bottom: index == 1 && strAry.length >= 3 ? 30 : index == 1 ? 22 : 0,
             });
@@ -330,15 +338,33 @@ class Leaderboard {
         bondText(this.ctx, x, y, bondTextStyle, 5);
     }
 
+    getScaleCanvas (){
+        if(this.scale != 1){
+            let tmp = this.ctx.getImageData(0, 0, this.canvas.width * this.scale, this.canvas.height * this.scale );
+            let canvas = createCanvas(this.canvas.width * this.scale, this.canvas.height * this.scale);
+            let ctx = canvas.getContext('2d');
+            ctx.putImageData(tmp, 0, 0);
+            return canvas;
+        }else{
+            return this.canvas;
+        }
+    }
     getBuffer(compressionLevel = 9){
-        // this.canvas.height = 540;
-        // this.canvas.width = 570;
-        return this.canvas.toBuffer('image/png', {compressionLevel: compressionLevel, filters: this.canvas.PNG_FILTER_NONE})
+        let pngConfig = {
+            compressionLevel: compressionLevel, filters: this.canvas.PNG_FILTER_NONE
+        };
+        let canvas = this.getScaleCanvas();
+        return canvas.toBuffer('image/png', pngConfig)
     }
 
     getPNG(compressionLevel = 9) {
         let imgUrl = __dirname + `/test/${this.styleType}.png`;
-        fs.writeFileSync(imgUrl, this.canvas.toBuffer('image/png', {compressionLevel: compressionLevel}));
+        let pngConfig = {
+            compressionLevel: compressionLevel, filters: this.canvas.PNG_FILTER_NONE
+        };
+        let canvas = this.getScaleCanvas();
+        fs.writeFileSync(imgUrl, canvas.toBuffer('image/png', pngConfig));
+
     }
 }
 

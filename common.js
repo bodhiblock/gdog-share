@@ -66,6 +66,7 @@ registerFont(path.resolve('./font/msyh.ttc'), { family: 'Microsoft YaHei UI' });
 registerFont(path.resolve('./font/msyhl.ttc'), { family: 'Microsoft YaHei UI Light' });
 registerFont(path.resolve('./font/msyhbd.ttc'), { family: 'Microsoft YaHei UI Bold' });
 registerFont(path.resolve('./font/Speedtest-2.ttf'), { family: 'speedtest' });
+registerFont(path.resolve('./font/MEDIUM.TTF'), { family: '腾讯字体' });
 
 function drawImage(ctx, url, arr){
     return new Promise((resolve, reject) => {
@@ -79,14 +80,19 @@ function drawImage(ctx, url, arr){
     })
 }
 
-function bondText(ctx, x, y, styleText, gap){
+function bondText(ctx, x, y, styleText, gap, fixed){
     styleText.forEach(item => {
         ctx.font = item.font;
         ctx.textBaseline = "top";
         ctx.fillStyle = item.fillStyle || '#ffffff';
         let measure = ctx.measureText(item.text);
         ctx.fillText(item.text, x, y + (item.bottom || 0));
-        x = x + measure.width + (gap || 10);
+        if(fixed){
+            x = x + gap;
+        }else{
+            x = x + measure.width + (gap || 10);
+        }
+
     })
 }
 
@@ -210,13 +216,13 @@ function toNumberFormat(num, zoom){
     num = Number(num);
     if(!!!num) return ['0'];
     if(num >= 1000000000){
-        return zoomNumber(new Decimal(num).div(1000000000).toDP(2).toString(), 'B', zoom);
+        return zoomNumber(new Decimal(num).div(1000000000).toDP(1).toString(), 'B', zoom);
     }
     if(num >= 1000000){
-        return zoomNumber(new Decimal(num).div(1000000).toDP(2).toString(), 'M', zoom);
+        return zoomNumber(new Decimal(num).div(1000000).toDP(1).toString(), 'M', zoom);
     }
     if(num >= 1000){
-        return zoomNumber(new Decimal(num).div(1000).toDP(2).toString(), 'K', zoom);
+        return zoomNumber(new Decimal(num).div(1000).toDP(1).toString(), 'K', zoom);
     }
     if(num < 1){
         let str = new Decimal(num).toFixed(18).toString();
@@ -229,7 +235,7 @@ function toNumberFormat(num, zoom){
             return ['0.0' ,  sub.toString(), str.slice(len, len + 2)]
         }
     }
-    return zoomNumber(new Decimal(num).toDP(2, Decimal.ROUND_DOWN).toString(), '', zoom);
+    return zoomNumber(new Decimal(num).toDP(1, Decimal.ROUND_DOWN).toString(), '', zoom);
     // return [new Decimal(num).toDP(2, Decimal.ROUND_DOWN).toString()];
 }
 
