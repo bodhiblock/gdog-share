@@ -296,7 +296,7 @@ class Leaderboard {
     }
 
     getPNG(compressionLevel = 8) {
-        let imgUrl = __dirname + '/test.png';
+        let imgUrl = __dirname + `/test/${this.styleType}.png`;
         fs.writeFileSync(imgUrl, this.canvas.toBuffer('image/png', {compressionLevel: compressionLevel}));
     }
 }
