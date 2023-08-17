@@ -1,4 +1,4 @@
-const Leaderboard = require('../leaderboard');
+const Leaderboard = require('../leaderboard/leaderboard');
 
 const shareData = {
     bot_id: 0,

@@ -1,7 +1,8 @@
 const {createCanvas, loadImage, Image, registerFont, PngConfig} = require('canvas')
-
+const path = require('path');
 const fs = require('fs');
-const {drawImage, bondText, canvasBg, styleColor, getAgoTime, styleUrlPath, toNumberFormat} = require('./common');
+const {drawImage, bondText, getAgoTime, toNumberFormat} = require('../common');
+const {leaderboardBg, styleUrlPath, styleColor} = require('./bg');
 
 const Decimal = require('decimal.js');
 const QRCode = require('qrcode');
@@ -25,7 +26,7 @@ class Leaderboard {
     async initBg() {
         this.ctx.save()
         this.ctx.scale(this.scale, this.scale)
-        await canvasBg(this.ctx, this.styleType);
+        await leaderboardBg(this.ctx, this.styleType);
         this.tmp = this.ctx.getImageData(0, 0, this.canvas.width * this.scale , this.canvas.height / this.scale);
         this.ctx.restore();
     }
@@ -358,7 +359,7 @@ class Leaderboard {
     }
 
     getPNG(compressionLevel = 9) {
-        let imgUrl = __dirname + `/test/${this.styleType}.png`;
+        let imgUrl = path.resolve(`./test/leaderboard_${this.styleType}.png`);
         let pngConfig = {
             compressionLevel: compressionLevel, filters: this.canvas.PNG_FILTER_NONE
         };
