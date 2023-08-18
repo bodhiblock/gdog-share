@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node test/leaderboard.js"
+    "test": "node test/leaderboard.js",
+    "dev": "node test/rankingboard.js"
   },
   "author": "",
   "license": "ISC",
