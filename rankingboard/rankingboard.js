@@ -58,7 +58,7 @@ class rankingboard {
     this.ctx.save();
     this.ctx.scale(this.scale, this.scale);
     this.setNameText();
-    this.setPointer("60");
+    this.setPointer("0");
     this.setDiyText("11/22/23", 78, 190, "40", ["#23d8d8", "#957df0"]);
     this.setTopText("NEW", 106, 288, "60", ["#ffffff", "#61c8c0"], true);
     this.setTopText("10x", 768, 288, "60", ["#ffffff", "#ffcd83"], true);
@@ -189,10 +189,11 @@ class rankingboard {
   setPointer(value) {
     this.ctx.save();
     this.ctx.translate(1010, 180);
-    this.ctx.rotate((Math.PI / 180) * (Number(value) - 30));
+    let cur = Number(value) > 180 ? 180 : Number(value);
+    this.ctx.rotate((Math.PI / 180) * (cur - 30));
     const img = new Image();
     img.onload = () => {
-      this.ctx.drawImage(img, -50, -30);
+      this.ctx.drawImage(img, -58, -32);
     };
     img.src = "./images/rankingboard/pointer.png";
     this.ctx.restore();
@@ -227,13 +228,10 @@ class rankingboard {
       maxY = 906;
     this.ctx.beginPath();
     let maxData = Math.max(...data);
-    console.log(maxData, "maxData");
     let each = (maxX - x0 - 32) / data.length;
     var yWidht = y0 - maxY - 16;
-    console.log(yWidht, "yWidht");
     for (var i = 0; i < data.length; i++) {
       let take = (data[i] / maxData).toFixed(2);
-      console.log((maxX + x0 - 32) / data.length, "x0 + 16 + (maxX + x0 - 32) / data.length");
       this.ctx.lineTo(x0 + 16 + each * i, y0 - yWidht * take);
     }
     this.ctx.strokeStyle = "blue";
