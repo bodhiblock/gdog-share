@@ -1,7 +1,7 @@
 const { createCanvas, loadImage, Image, registerFont, PngConfig } = require("canvas");
 const path = require("path");
 const fs = require("fs");
-const { bondText, toNumberFormat } = require("../common");
+const { bondText, drawImage } = require("../common");
 const { leaderboardBg, styleColor } = require("./bg2");
 
 const QRCode = require("qrcode");
@@ -11,7 +11,6 @@ class rankingboard {
   ctx;
   canvas;
   tmp;
-  // green=potential, blue=new, purple=hot, diy=<diy>
   styleColor;
   diyText;
   scale;
@@ -44,12 +43,12 @@ class rankingboard {
   ) {
     console.log(option, "option");
     if (typeof option == "string") option = { styleType: option };
-    // this.styleType = option.styleType;
+    this.styleType = option.styleType;
     this.diyText = option.diyText || "";
     this.scale = option.scale || 0.8;
     this.canvas = createCanvas(1140, 1080);
     this.ctx = this.canvas.getContext("2d");
-    // this.styleColor = styleColor[option.styleType];
+    this.styleColor = styleColor[option.styleType];
   }
   data;
   async setData(data) {
@@ -59,14 +58,15 @@ class rankingboard {
     this.ctx.save();
     this.ctx.scale(this.scale, this.scale);
     this.setNameText();
+    this.setPointer("60");
     this.setDiyText("11/22/23", 78, 190, "40", ["#23d8d8", "#957df0"]);
     this.setTopText("NEW", 106, 288, "60", ["#ffffff", "#61c8c0"], true);
     this.setTopText("10x", 768, 288, "60", ["#ffffff", "#ffcd83"], true);
     this.setTopText("10", 638, 412, "60", ["#ffffff", "#51b973"]);
     this.setTopText("25", 966, 412, "60", ["#ffffff", "#ffcd83"]);
     this.setTopText("1.2", 284, 412, "60", ["#ffffff", "#61c8c0"]);
-    this.setLineChart(); // 折线图
-    await this.setQRCode(data.token_contract); //二维码
+    this.setLineChart();
+    await this.setQRCode(data.token_contract);
     this.ctx.restore();
   }
 
@@ -75,13 +75,11 @@ class rankingboard {
     this.ctx.font = `"bold ${size}px 'speedtest'"`;
     this.ctx.textBaseline = "top";
     this.ctx.fillStyle = "#000000";
-    //创建渐变
     let gradient = this.ctx.createLinearGradient(180, 184, 256, 184);
     let diyStyleColor = JSON.parse(JSON.stringify(arr));
     diyStyleColor?.forEach((item, index) => {
       gradient.addColorStop(index, item);
     });
-    //填充渐变
     this.ctx.fillStyle = gradient;
     this.ctx.fillText(text, x, y);
   }
@@ -92,13 +90,6 @@ class rankingboard {
     this.ctx.textBaseline = "top";
     this.ctx.fillStyle = "#000000";
     //创建渐变
-
-    // 渐变logo
-    // var g2 = context.createLinearGradient(0, 300, 0, 350);
-    // g2.addColorStop(0.3, 'rgb(254, 220, 69)');
-    // g2.addColorStop(1, 'rgb(255, 0, 0)');
-    // context.font = 'bold 48px Arial';
-    // context.fillStyle = g2;
     let gradient;
     if (type) {
       gradient = this.ctx.createLinearGradient(90, 320, 90, 338);
@@ -137,18 +128,11 @@ class rankingboard {
         fillStyle: "#a7a7a7",
       },
     ]);
-    bondText(this.ctx, 926, 180, [
+    bondText(this.ctx, 924, 194, [
       {
-        text: "market Sentiment",
-        font: "bold 18px '腾讯字体'",
+        text: "Market Sentiment",
+        font: "bold 19px '腾讯字体'",
         fillStyle: "#cccccc",
-      },
-    ]);
-    bondText(this.ctx, 998, 156, [
-      {
-        text: "18",
-        font: "bold 18px '腾讯字体'",
-        fillStyle: "#ffffff",
       },
     ]);
     bondText(this.ctx, 104, 516, [
@@ -202,6 +186,25 @@ class rankingboard {
     ]);
   }
 
+  setPointer(value) {
+    this.ctx.save();
+    this.ctx.translate(1010, 180);
+    this.ctx.rotate((Math.PI / 180) * (Number(value) - 30));
+    const img = new Image();
+    img.onload = () => {
+      this.ctx.drawImage(img, -50, -30);
+    };
+    img.src = "./images/rankingboard/pointer.png";
+    this.ctx.restore();
+    bondText(this.ctx, 1000, 170, [
+      {
+        text: value,
+        font: "bold 18px '腾讯字体'",
+        fillStyle: "#ffffff",
+      },
+    ]);
+  }
+
   setbondText(ctx, x, y, styleText, gap, fixed) {
     styleText.forEach((item) => {
       ctx.font = item.font;
@@ -217,35 +220,15 @@ class rankingboard {
     });
   }
 
-  //折线图
   setLineChart(data = [100, 323, 233, 313, 321, 94, 223]) {
-    //绘制坐标轴
     let x0 = 190,
-      y0 = 994; // xy轴原点
+      y0 = 994;
     var maxX = 920,
-      maxY = 906; //xy最大值
-    // var lineWidth = 1; //箭头宽度
-    // //x轴
-    // this.ctx.beginPath();
-    // this.ctx.moveTo(x0, y0);
-    // this.ctx.lineTo(maxX, y0);
-    // this.ctx.lineTo(maxX - lineWidth, y0 + lineWidth);
-    // this.ctx.moveTo(maxX, y0);
-    // this.ctx.lineTo(maxX - lineWidth, y0 - lineWidth);
-    // this.ctx.stroke();
-    // //y轴
-    // this.ctx.beginPath();
-    // this.ctx.moveTo(x0, y0);
-    // this.ctx.lineTo(x0, maxY);
-    // this.ctx.lineTo(x0 - lineWidth, maxY + lineWidth);
-    // this.ctx.lineTo(x0, maxY);
-    // this.ctx.lineTo(x0 + lineWidth, maxY + lineWidth);
-    // this.ctx.stroke();
-    //折线
+      maxY = 906;
     this.ctx.beginPath();
-    let maxData = Math.max(...data); //最大值
+    let maxData = Math.max(...data);
     console.log(maxData, "maxData");
-    let each = (maxX - x0 - 32) / data.length; //x轴间距
+    let each = (maxX - x0 - 32) / data.length;
     var yWidht = y0 - maxY - 16;
     console.log(yWidht, "yWidht");
     for (var i = 0; i < data.length; i++) {
@@ -257,7 +240,6 @@ class rankingboard {
     this.ctx.stroke();
   }
 
-  //生成二维码
   async setQRCode(text) {
     let that = this;
     return new Promise((resolve, reject) => {

@@ -1,4 +1,4 @@
-const rankingboard = require("../leaderboard/rankingboard");
+const rankingboard = require("../rankingboard/rankingboard");
 
 const shareData = {
   bot_id: 0,

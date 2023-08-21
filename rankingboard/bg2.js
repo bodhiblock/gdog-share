@@ -42,7 +42,7 @@ async function leaderboardBg(ctx) {
   await drawImage(ctx, styleUrl("line_title.png"), [80, 174]);
   await drawImage(ctx, styleUrl("title_market.png"), [84, 82]);
   await drawImage(ctx, styleUrl("dashboard.png"), [896, 80]);
-  await drawImage(ctx, styleUrl("pointer.png"), [960, 138]);
+  // await drawImage(ctx, styleUrl("pointer.png"), [960, 138]);
   await drawImage(ctx, styleUrl("icon.png"), [104, 420]);
   await drawImage(ctx, styleUrl("icon_rise.png"), [304, 624]);
   await drawImage(ctx, styleUrl("icon_rise.png"), [634, 624]);
@@ -79,18 +79,6 @@ async function leaderboardBg(ctx) {
   await drawImage(ctx, styleUrl("qr_code_bg_summary.png"), [960, 60]);
   // await drawImage(ctx, styleUrl("qr_code.png"), [970, 70]);
 
-  // bondText(ctx, 15, 2, [
-  //     {
-  //         text: '@pepecoineth',
-  //         font: "bold 26px 'Microsoft YaHei UI'",
-  //         fillStyle: "#120f14",
-  //     },
-  //     {
-  //         text: '·12h',
-  //         font: "26px 'Microsoft YaHei UI'",
-  //         fillStyle: "#120f14",
-  //     }
-  // ]);
   ctx.restore();
 }
 
