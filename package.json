@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "node test/leaderboard.js",
-    "dev": "node test/rankingboard.js"
+    "dev": "node test/rankingboard.js",
+    "server": "node test/redpacketboard.js"
   },
   "author": "",
   "license": "ISC",
