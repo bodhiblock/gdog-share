@@ -129,7 +129,7 @@ class Leaderboard {
 
         this.setTwitter(440, 860, [toNumberFormat(twitter_related.followers_count).join(''), 'Coverage']);
         this.setTwitter(440, 910, [toNumberFormat(twitter_related.related_count).join(''), 'Mentioned']);
-        this.setTwitter(440, 960, [toNumberFormat(twitter_related.related_count).join(''), 'Reposts']);
+        this.setTwitter(440, 960, [toNumberFormat(twitter_related.retweet_count).join(''), 'Reposts']);
         this.setTwitter(440, 1010, [toNumberFormat(twitter_related.favourites_count).join(''), 'Likes']);
 
         this.setTime(data.create_time);

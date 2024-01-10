@@ -1,5 +1,24 @@
 # gdog-share
 
+### redpacketboard Demo ./test/redpacketboard.js
+```javascript
+let purple = new redpacketboard({
+    text: 'Useraaaaaa1231231的红包',
+    value: 1000000,
+})
+await purple.initBg()
+await purple.setData({
+    text: '3112432432',
+    value: 999,
+})
+
+console.log(await purple.getBuffer())
+await purple.setData({
+    text: '34399-----',
+    value: 8888,
+});
+console.log(await purple.getBuffer())
+```
 
 ### Leaderboard Demo ./test/leaderboard.js
 ```

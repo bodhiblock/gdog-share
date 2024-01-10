@@ -33,7 +33,9 @@ class redpacketboard {
   async setData(data) {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     this.ctx.putImageData(this.tmp, 0, 0)
-    this.data = data
+    this.data = data;
+    this.text = data.text || ''
+    this.value = data.value || 0;
     this.ctx.save()
     this.ctx.scale(this.scale, this.scale)
     this.setNameText()
