@@ -1,4 +1,4 @@
-const redpacketboard = require('../redpacketboard/redpacketboard')
+const redpacketboard = require('../index.js').redpacketboard;
 
 async function test() {
   console.time('diy')
@@ -16,7 +16,7 @@ async function test() {
   console.log(await purple.getBuffer())
   await purple.setData({
     text: '34399-----',
-    value: 8888,
+    value: 82323888,
   });
   console.log(await purple.getBuffer())
   purple.getPNG();

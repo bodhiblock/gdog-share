@@ -33,12 +33,17 @@ function getAgoTime(timestamp) {
 }
 
 
+registerFont(path.resolve(__dirname, './font/msyh.ttc'), { family: 'Microsoft YaHei UI' });
+registerFont(path.resolve(__dirname, './font/msyhl.ttc'), { family: 'Microsoft YaHei UI Light' });
+registerFont(path.resolve(__dirname, './font/msyhbd.ttc'), { family: 'Microsoft YaHei UI Bold' });
+registerFont(path.resolve(__dirname, './font/Speedtest-2.ttf'), { family: 'speedtest' });
+registerFont(path.resolve(__dirname, './font/MEDIUM.TTF'), { family: '腾讯字体' });
 
-registerFont(path.resolve('./font/msyh.ttc'), { family: 'Microsoft YaHei UI' });
-registerFont(path.resolve('./font/msyhl.ttc'), { family: 'Microsoft YaHei UI Light' });
-registerFont(path.resolve('./font/msyhbd.ttc'), { family: 'Microsoft YaHei UI Bold' });
-registerFont(path.resolve('./font/Speedtest-2.ttf'), { family: 'speedtest' });
-registerFont(path.resolve('./font/MEDIUM.TTF'), { family: '腾讯字体' });
+// registerFont('./font/msyh.ttc', { family: 'Microsoft YaHei UI' });
+// registerFont('./font/msyhl.ttc', { family: 'Microsoft YaHei UI Light' });
+// registerFont('./font/msyhbd.ttc', { family: 'Microsoft YaHei UI Bold' });
+// registerFont('./font/Speedtest-2.ttf', { family: 'speedtest' });
+// registerFont('./font/MEDIUM.TTF', { family: '腾讯字体' });
 
 function drawImage(ctx, url, arr){
     return new Promise((resolve, reject) => {
