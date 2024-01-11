@@ -1,12 +1,12 @@
 const { createCanvas, loadImage, Image, registerFont, PngConfig } = require('canvas')
 const path = require('path')
 const fs = require('fs')
-const { bondText, drawImage } = require('../common')
+const { bondText, drawImage, toNumberFormat } = require('../common')
 const { leaderboardBg, styleColor } = require('./bg')
 
 const QRCode = require('qrcode')
 
-class redpacketboard {
+class giftboxboard {
   ctx
   canvas
   tmp
@@ -24,9 +24,9 @@ class redpacketboard {
   constructor(option) {
     console.log(option, 'option')
     this.text = option.text || ''
-    this.value = option.value
+    this.value = option.value || 0
     this.scale = option.scale || 0.8
-    this.canvas = createCanvas(790, 992)
+    this.canvas = createCanvas(882, 1087)
     this.ctx = this.canvas.getContext('2d')
   }
   data
@@ -43,21 +43,31 @@ class redpacketboard {
   }
 
   setNameText() {
+    this.ctx.save()
+    this.ctx.translate(0, 0)
+    this.ctx.rotate((350 * Math.PI) / 180)
     this.ctx.textAlign = 'center'
-    bondText(this.ctx, 395, 155, [
+    bondText(this.ctx, 395, 284, [
       {
         text: this.text,
-        font: "bold 50px 'Microsoft YaHei UI Light'",
-        fillStyle: '#6E2315',
+        font: "bold 32px 'Microsoft YaHei UI Light'",
+        fillStyle: '#D04040',
       },
     ])
-    bondText(this.ctx, 395, 252, [
+    this.ctx.restore()
+
+    this.ctx.save()
+    this.ctx.translate(0, 0)
+    this.ctx.rotate((350 * Math.PI) / 174)
+    this.ctx.textAlign = 'center'
+    bondText(this.ctx, 460, 370, [
       {
         text: this.value,
-        font: "bold 140px 'Microsoft YaHei UI Bold'",
-        fillStyle: '#FF4714',
+        font: "bold 106px 'Microsoft YaHei UI Bold'",
+        fillStyle: '#FFFFFF',
       },
     ])
+    this.ctx.restore()
   }
 
   getScaleCanvas() {
@@ -81,7 +91,7 @@ class redpacketboard {
   }
 
   getPNG(compressionLevel = 9) {
-    let imgUrl = path.resolve(`./test/redpacketboard.png`)
+    let imgUrl = path.resolve(`./test/giftboxboard.png`)
     let pngConfig = {
       compressionLevel: compressionLevel,
       filters: this.canvas.PNG_FILTER_NONE,
@@ -91,4 +101,4 @@ class redpacketboard {
   }
 }
 
-module.exports = redpacketboard
+module.exports = giftboxboard

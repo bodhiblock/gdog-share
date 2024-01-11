@@ -9,7 +9,8 @@
   "scripts": {
     "test": "node test/leaderboard.js",
     "dev": "node test/rankingboard.js",
-    "server": "node test/redpacketboard.js"
+    "server": "node test/redpacketboard.js",
+    "gift": "node test/giftboxboard.js"
   },
   "author": "",
   "license": "ISC",
