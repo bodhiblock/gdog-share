@@ -1,5 +1,28 @@
 # gdog-share
 
+### giftboxboard Demo ./test/giftboxboard.js
+```javascript   
+let giftboxboard = new giftboxboard({
+    text: 'Useraaaaaa1231231的礼盒',
+    value: 1000000,
+    scale: 0.4,
+})      
+
+await giftboxboard.initBg()
+await giftboxboard.setData({
+    text: '3112432432',
+    value: 999,
+})
+
+console.log(await giftboxboard.getBuffer())
+await giftboxboard.setData({
+    text: '34399-----',
+    value: 8888,
+});
+console.log(await giftboxboard.getBuffer())
+
+```
+
 ### redpacketboard Demo ./test/redpacketboard.js
 ```javascript
 let purple = new redpacketboard({

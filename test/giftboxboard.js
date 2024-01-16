@@ -12,7 +12,7 @@ async function test() {
   console.log(await purple.getBuffer())
   await purple.setData({
     text: 'Airdrop by Useraaaaaa',
-    value: 888888,
+    value: 8822228888,
   })
   purple.getPNG()
 }
