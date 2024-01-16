@@ -6,6 +6,7 @@ async function test() {
   let purple = new redpacketboard({
     text: 'Useraaaaaa1231231的红包',
     value: 1000000,
+    scale: 0.2
   })
   await purple.initBg()
   await purple.setData({
@@ -15,8 +16,8 @@ async function test() {
 
   console.log(await purple.getBuffer())
   await purple.setData({
-    text: '34399-----',
-    value: 82323888,
+    text: '34399---',
+    value: 82328,
   });
   console.log(await purple.getBuffer())
   purple.getPNG();

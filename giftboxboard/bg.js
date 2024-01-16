@@ -1,7 +1,8 @@
 const { drawImage } = require('../common')
-
+const path = require('path');
 function styleUrlPath(name) {
-  return `./images/giftboxboard/${name}`
+  // return `./images/giftboxboard/${name}`
+  return path.resolve(__dirname, `../images/giftboxboard/${name}`)
 }
 
 async function leaderboardBg(ctx) {
